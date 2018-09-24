@@ -67,9 +67,9 @@ class SettingsController extends Controller
             'sitemap_entries.priority priority',
         ])->from(['{{%sections}} sections'])
             ->leftJoin('{{%structures}} structures', '[[structures.id]] = [[sections.structureId]]')
-            ->innerJoin('{{%sections_sites}} sections_sites', '[[sections_sites.sectionId]] = [[sections.id]] AND [[sections_sites.hasUrls]] = 1')
+            ->innerJoin('{{%sections_sites}} sections_sites', '[[sections_sites.sectionId]] = [[sections.id]] AND [[sections_sites.hasUrls]] = 1::boolean')
             ->leftJoin('{{%entries}} entries', '[[sections.id]] = [[entries.sectionId]]')
-            ->leftJoin('{{%elements}} elements', '[[entries.id]] = [[elements.id]] AND [[elements.enabled]] = 1')
+            ->leftJoin('{{%elements}} elements', '[[entries.id]] = [[elements.id]] AND [[elements.enabled]] = 1::boolean')
             ->leftJoin('{{%dolphiq_sitemap_entries}} sitemap_entries', '[[sections.id]] = [[sitemap_entries.linkId]] AND [[sitemap_entries.type]] = "section"')
 
             ->groupBy(['sections.id'])
@@ -90,9 +90,9 @@ class SettingsController extends Controller
             ])
             ->from(['{{%categories}} categories'])
             ->innerJoin('{{%categorygroups}} categorygroups', '[[categories.groupId]] = [[categorygroups.id]]')
-            ->innerJoin('{{%categorygroups_sites}} categorygroups_sites', '[[categorygroups_sites.groupId]] = [[categorygroups.id]] AND [[categorygroups_sites.hasUrls]] = 1')
+            ->innerJoin('{{%categorygroups_sites}} categorygroups_sites', '[[categorygroups_sites.groupId]] = [[categorygroups.id]] AND [[categorygroups_sites.hasUrls]] = 1::boolean')
             ->leftJoin('{{%entries}} entries', '[[categories.id]] = [[entries.sectionId]]')
-            ->leftJoin('{{%elements}} elements', '[[entries.id]] = [[elements.id]] AND [[elements.enabled]] = 1')
+            ->leftJoin('{{%elements}} elements', '[[entries.id]] = [[elements.id]] AND [[elements.enabled]] = 1::boolean')
             ->leftJoin('{{%dolphiq_sitemap_entries}} sitemap_entries', '[[categorygroups.id]] = [[sitemap_entries.linkId]] AND [[sitemap_entries.type]] = "category"')
             ->groupBy(['categorygroups.id'])
             ->orderBy(['name' => SORT_ASC]);
